@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Radio Wnet Player</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="js/libs/jqueryui/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/background.js"></script>
+        <script type="text/javascript" src="js/libs/volume-slider/volume-slider.js"></script>
+        <script type="text/javascript" src="js/libs/seek-slider/seek-slider.js"></script>
+        <script type="text/javascript" src="js/panel.js"></script>
+        <link href="css/volume-slider.css" rel="stylesheet" type="text/css" />
+        <link href="css/panel.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div style="width: 280px;">
+            <div style="width: 215px;float: left;"><a href="http://www.radiownet.pl/" target="_blank"><img align="top" height="60px;" src="img/WNet_logo.png"/></a></div>
+            <div id="aktualna_godzina"></div>
+        </div>
+        <div style="clear:both;"></div>
+        <br/>
+        <div class="button_play_list"  id="elem_0" style="float: left;width: 32px;"></div>
+        <div style="height: 55px; " >
+            <span style="color:#555 ;">Aktualnie na antenie od: </span><span  id="currentBroadCastStartFormatted"></span>
+            <div id="player_header_current">Tytuł</div>
+        </div>
+        <span style="color:#555 ;">Następnie na antenie od: </span><span  id="nextBroadCastStartFormatted"></span>
+        <br/>
+        <div id="player_header_next">Tytuł</div>
+        <br/>
+        <div><a href="http://www.radiownet.pl/#/program" target="_blank" style="text-decoration: none;">Pokaż pełną ramówkę</a></div>
+        <div style="clear:both;"></div>
+        <div id="panel_player" >
+            <div id="current_title">tytuł</div>
+            <div style="width: 270px;display: inline-block;">
+                <div id="button_play" ></div>
+                <div id="button_pause"></div>
+                <div id="button_stop" ></div>
+
+                <div id="volume_panel" >
+                    <span class="tooltip"></span> <!-- Tooltip --><br/>
+                    <div id="slider"></div> <span class="volume"></span> <!-- Volume -->
+                </div>
+            </div> 
+            <div id="seek_panel"  >
+                <div id="master"></div><span id="from-to" >00:00:00/00:00:00</span>
+            </div>
+
+        </div>
+
+        <div style="clear:both;"></div>
+        <br/>
+        <span style="font-weight: bold;">Poranki</span>&nbsp;<span id="wiecej_porankow"><a href="http://www.radiownet.pl/etery/poranki/" target="_blank" >pozostałe ...</a></span>
+        <div  style="display: inline-block;border-top: 1px solid #ff910e;"/>
+        <div id="playLista">
+        </div>
+    </body>
+</html>
