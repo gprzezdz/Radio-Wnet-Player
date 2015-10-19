@@ -148,3 +148,37 @@
     text-align: right;
     color:#555 ;
 }
+
+#footer
+{
+    width: 290px;
+    border-bottom:  1px solid #ff910e;
+    display: inline-block;
+    margin-top: 5px;
+    
+}
+
+#footer #options
+{
+    text-align: left;
+    width: 220px;
+    float: left;
+    text-decoration: none;
+    
+}
+#footer #options a
+{
+    
+    text-decoration: none;
+    font-weight: bold;
+    font-size: smaller;
+}
+#footer #version
+{
+
+    text-align: right;
+    float: left;
+    width: 67px;
+    font-weight: bold;
+    font-size: smaller;
+}

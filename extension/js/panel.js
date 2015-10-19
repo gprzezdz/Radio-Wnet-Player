@@ -1,6 +1,23 @@
 $(document).ready(function () {
-    console.log = function () {
+//    console.log = function () {
+//    }
+
+    var Stream = localStorage["stream"];
+    if (Stream === undefined)
+    {
+        Stream = "128";
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+    } else if (Stream === "64")
+    {
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
+    } else if (Stream === "32")
+    {
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
+    } else {
+        Stream = "128";
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     }
+
     $("#elem_0").on("click", {
         arr: arrayLista["0"]
     }, chrome.extension.getBackgroundPage().clickPlayListElement);
@@ -48,8 +65,6 @@ $(document).ready(function () {
         $(".tooltip").css('left', chrome.extension.getBackgroundPage().getVolume());
         $(".tooltip").text(chrome.extension.getBackgroundPage().getVolume());
         $(".tooltip").show('fast');
-        console.log("xxxx");
-        //$("#slider .tooltip").css('left', chrome.extension.getBackgroundPage().getVolume());
     });
     $("#slider .ui-slider-handle").mouseout(function () {
         $(".tooltip").hide();
@@ -65,6 +80,18 @@ $(document).ready(function () {
     setInterval(function () {
         czasUtworu();
     }, 1000);
+    $("#go-to-options").on("click", function (e) {
+        if (chrome.runtime.openOptionsPage) {
+            // New way to open options pages, if supported (Chrome 42+).
+            chrome.runtime.openOptionsPage();
+        } else {
+            // Reasonable fallback.
+            alert("aa");
+            window.open(chrome.runtime.getURL('options.html'));
+        }
+    });
+    $("#version").text("ver: " + chrome.app.getDetails().version);
+    $("#options").append(' <b style=" font-weight: bold;    font-size: smaller;">stream:' + Stream + '</b>');
 
 });
 function czasUtworu()

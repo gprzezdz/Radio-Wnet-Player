@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link href="css/options.css" rel="stylesheet" type="text/css" />
+        <title>Opcje dla Radio Wnet Player</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="js/libs/jqueryui/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/options.js"></script>
+    </head>
+    <body>
+        <div id="content">
+            <div id="menu">Jakość strumienia on-line</div>
+            <div id="menu-content">
+                <h4>Poniżej przedstawiamy ile MB zajmuje słuchanie radia przez godzinę:</h4>
+                <p>Domyślnie wybrany strumień to 128 kbps</p>
+                <p>
+                    <input type="radio" name="stream" value="128">Strumień 128 kbps MP3: około 55 MB
+                    <br/><input type="radio" name="stream" value="64">Strumień 64 kbps AAC+: około 27,5 MB
+                    <br/><input type="radio" name="stream" value="32">Strumień 32 kbps AAC+: około 13,8 MB
+                </p>
+
+                <br/>
+
+                <h4>Adresy naszych strumieni:</h4>
+                <p>
+                    http://audio.radiownet.pl:8000/stream – stream 128 kbps MP3
+                    <br/>http://audio.radiownet.pl:8000/stream64 – stream 64kbps AAC+
+                    <br/>http://audio.radiownet.pl:8000/stream32 – stream 32kbps AAC+
+                </p>
+                <a href="http://www.radiownet.pl/#/strony/jak-sluchac" target="_blank">http://www.radiownet.pl/#/strony/jak-sluchac</a>
+            </div>
+        </div>
+    </body>
+</html>
