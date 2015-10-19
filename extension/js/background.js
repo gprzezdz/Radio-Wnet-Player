@@ -15,8 +15,8 @@ $(document).ready(function () {
     } else {
         arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     }
-//    console.log = function () {
-//    }
+    console.log = function () {
+    }
 });
 
 var wnetPlayer;
