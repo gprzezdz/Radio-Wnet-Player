@@ -1,6 +1,6 @@
 $(document).ready(function () {
-//    console.log = function () {
-//    }
+    console.log = function () {
+    }
 
     var Stream = localStorage["stream"];
     if (Stream === undefined)
