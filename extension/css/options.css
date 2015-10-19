@@ -1,0 +1,24 @@
+#content
+{
+    margin: auto;
+    width: 600px;
+}
+#menu{
+    border-bottom:  1px solid silver;
+    font-size:large;
+    font-weight: bold;
+    padding: 10px 10px 10px 0px;
+}
+
+
+h4{
+    font-size: 12px !important;
+    font-weight: bold !important;
+    color: #4cb8d6;
+    line-height: 12px !important;
+}
+
+p{color: #505050;
+    line-height: 15px;
+    font-size: 12px;
+    font-family: Arial,Helvetica,Verdana,sans-serif;}
