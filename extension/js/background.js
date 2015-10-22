@@ -41,7 +41,6 @@ function setSeekSlider($par)
 
 function getCurrentTime()
 {
-    console.log("wnetPlayer.currentTime: " + wnetPlayer.currentTime);
     return parseInt(wnetPlayer.currentTime);
 }
 function setCurrentTime($par)
@@ -51,19 +50,16 @@ function setCurrentTime($par)
 }
 function getDuration()
 {
-    console.log("wnetPlayer.duration: " + parseInt(wnetPlayer.duration));
     return parseInt(wnetPlayer.duration);
 }
 function setVolume($par)
 {
-    console.log("setvolume: " + ($par / 100));
     wnetPlayer.volume = $par / 100;
 }
 function getVolume()
 {
     if (wnetPlayer.volume === 1)
         wnetPlayer.volume = 35 / 100;
-    console.log("getvolume: " + wnetPlayer.volume * 100);
     return wnetPlayer.volume * 100;
 }
 function setElemZero($par)
@@ -84,7 +80,6 @@ function setPanelPlayer($par)
         range: "min",
         animate: true,
         slide: function (event, ui) {
-            console.log("wolume: " + wnetPlayer.volume);
         }
     });
     panelPlayer.find("#button_play").mouseover({
@@ -116,7 +111,7 @@ function setCurrentPlayID($par)
 }
 function getCurrentPlayID()
 {
-    console.log("getCurrentPlayID: " + currentPlayID);
+
     if (currentPlayID === "")
         currentPlayID = "0";
     return currentPlayID;
@@ -143,8 +138,9 @@ function setPlay()
         return;
     if (getCurrentPlayID() === "0" && (getWnetPlayerStatus() === "stoped" || getWnetPlayerStatus() === "paused"))
     {
+        console.log("zzzz: " + arrayLista["0"].audio_file_name);
+
         wnetPlayer.src = arrayLista["0"].audio_file_name;
-        console.log("load: ");
         wnetPlayer.load();
     }
     console.log(wnetPlayer);
@@ -167,17 +163,14 @@ function setPlay()
 
 function setStop()
 {
-    console.log("stop play");
     wnetPlayer.pause();
     wnetPlayer.currentTime = 0;
-    console.log("slider value: " + seekSlider.slider("option", "value"));
     seekSlider.slider("option", "value", 0);
     ustawStop();
 }
 function setPause()
 {
 
-    console.log("pause");
     wnetPlayer.pause();
     ustawPause();
 }
@@ -185,7 +178,6 @@ function setPause()
 
 function getAktualnieNaAntenie($par_tytul, $par_tytul_next, $par_curr_od, $par_next_od)
 {
-    console.log("getAktualnieNaAntenie");
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/getCurrentBroadcastInfo.php", true);
     xhr.onreadystatechange = function () {
@@ -216,7 +208,6 @@ function getLastPoranki($par_div)
 {
     arrayListaSort = [];
     playLista = $par_div;
-    console.log("getLastPoranki");
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/getBroadcastListByEtherId.php?etherId=2064", true);
     xhr.onreadystatechange = function () {
@@ -229,7 +220,7 @@ function getLastPoranki($par_div)
             var i = 0;
             $.each(resp, function (key, arr) {
                 $.each(arr, function (key1, arr1) {
-                    console.log("arr1.title" + arr1.title);
+
                     arrayLista["" + arr1.id + ""] = arr1;
                     arrayListaSort[i] = "" + arr1.id + "";
                     i++;
@@ -257,10 +248,8 @@ function addClickElement()
     {
         key = arrayListaSort[i];
         arr = arrayLista[key];
-        console.log("key: " + key + " arr:" + arr.title);
         if (key !== "0")
         {
-            console.log("add : " + key + " arr:" + arr.title);
             var aa = '<div class="playListElement"><div class="button_play_list"  id="elem_' + key + '" ></div><a href="' + arr.url + '" target="_blank"><img style="float:left;padding-right:3px;" height=32px src="' + arr.avatar_file_name + '"/></a><div class="element_a" ><a href="' + arr.url + '" target="_blank">' + arr.title + '</a></div><div>';
 
             playLista.append(aa);
@@ -279,17 +268,18 @@ function addClickElement()
 function clickPlayListElement(event)
 {
 
-    console.log("arrayLista[0].audio_file_name " + event.data.arr.title);
-    console.log("id: " + event.data.arr.id);
-    console.log("audio_file_name" + event.data.arr.audio_file_name);
+
     playLista.find("#elem_" + event.data.arr.id + "").css("background-image", "url(img/media-playback-start_on.png)");
     if (getCurrentPlayID() === "0")
     {
-        arrayLista["0"].audio_file_name = event.data.arr.audio_file_name;
-        wnetPlayer.src = event.data.arr.audio_file_name;
+        wnetPlayer.src = arrayLista["0"].audio_file_name;
     }
-    if ((getCurrentPlayID() !== event.data.arr.id) || getCurrentPlayID() === "0")
+    if ((getCurrentPlayID() !== event.data.arr.id))
     {
+        console.log("arrayLista[0].audio_file_name " + event.data.arr.title);
+        console.log("id: " + event.data.arr.id);
+        console.log("audio_file_name" + event.data.arr.audio_file_name);
+        wnetPlayer.src = event.data.arr.audio_file_name;
         wnetPlayer.load();
         setCurrentPlayID(event.data.arr.id);
     }
@@ -302,7 +292,6 @@ function ustawStop()
 {
     elemZero.css("background-image", "url(img/media-playback-start.png)");
     $.each(arrayLista, function (key, arr) {
-        console.log("stop: " + key + " arr:" + arr.title);
         if (getCurrentPlayID() === arr.id)
         {
             playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-stop_on.png)");
@@ -323,7 +312,7 @@ function ustawStop()
 function ustawPlay()
 {
     $.each(arrayLista, function (key, arr) {
-        console.log("stop: " + key + " arr:" + arr.title);
+
         playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-start.png)");
     }
     );
@@ -343,9 +332,7 @@ function ustawPlay()
 
 function ustawPause()
 {
-    console.log("ustawPause");
     $.each(arrayLista, function (key, arr) {
-        console.log("pause off: " + key + " arr:" + arr.title);
         playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-start.png)");
 
     });
@@ -379,11 +366,9 @@ function hoverIn(event)
         else
             playLista.find("#elem_" + event.data.arr.id + "").css("background-image", "url(img/media-playback-start_on.png)");
     }
-    console.log(event.data.arr.id);
 }
 function hoverOut(event)
 {
-    console.log("out" + event.data.arr.id);
     if (getCurrentPlayID() !== event.data.arr.id)
     {
         if (event.data.arr.id === "0")
@@ -408,7 +393,6 @@ function hoverOut(event)
                 playLista.find("#elem_" + event.data.arr.id + "").css("background-image", "url(img/media-playback-pause_on.png)");
         }
     }
-    console.log("out" + event.data.arr.id);
 }
 
 
@@ -417,7 +401,6 @@ function hoverOut(event)
 
 function hoverPanelPlayerIn(event)
 {
-    console.log(event.data.button);
     if (event.data.button === "stop" && getWnetPlayerStatus() !== "stoped")
     {
         panelPlayer.find("#button_stop").css("background-image", "url(img/media-playback-stop_on.png)");
@@ -435,7 +418,6 @@ function hoverPanelPlayerIn(event)
 
 function hoverPanelPlayerOut(event)
 {
-    console.log(event.data.button);
     if (event.data.button === "stop" && getWnetPlayerStatus() !== "stoped")
     {
         panelPlayer.find("#button_stop").css("background-image", "url(img/media-playback-stop.png)");
