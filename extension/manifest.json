@@ -3,7 +3,7 @@
     "name": "Radio Wnet Player",
     "description": "Rozszerzenie do słuchania Radia Wnet online. Lista ostatnich poranków z możliwością odsłuchania",
     "short_name": "Radio Wnet Player",
-    "version": "1.0.3",
+    "version": "2.0.0",
     "author": "Grzegorz Przeździecki",
     "homepage_url": "http://www.radiownet.pl/",
     "options_page": "options.html",
