@@ -2,61 +2,78 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Radio Wnet Player</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"  />
         <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
         <script type="text/javascript" src="js/libs/jqueryui/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/background.js"></script>
-        <script type="text/javascript" src="js/libs/volume-slider/volume-slider.js"></script>
+        <script type="text/javascript" src="js/background.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="js/libs/volume-slider/volume-slider.js" charset="UTF-8"></script>
         <script type="text/javascript" src="js/libs/seek-slider/seek-slider.js"></script>
-        <script type="text/javascript" src="js/panel.js"></script>
+        <script type="text/javascript" src="js/panel.js" charset="UTF-8"></script>
         <link href="css/volume-slider.css" rel="stylesheet" type="text/css" />
         <link href="css/panel.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div style="width: 280px;">
-            <div style="width: 215px;float: left;"><a href="http://www.radiownet.pl/" target="_blank"><img align="top" height="60px;" src="img/WNet_logo.png"/></a></div>
-            <div id="aktualna_godzina"></div>
-        </div>
-        <div style="clear:both;"></div>
-        <br/>
-        <div class="button_play_list"  id="elem_0" style="float: left;width: 32px;"></div>
-        <div style="height: 55px; " >
-            <span style="color:#555 ;">Aktualnie na antenie od: </span><span  id="currentBroadCastStartFormatted"></span>
-            <div id="player_header_current">Tytuł</div>
-        </div>
-        <span style="color:#555 ;">Następnie na antenie od: </span><span  id="nextBroadCastStartFormatted"></span>
-        <br/>
-        <div id="player_header_next">Tytuł</div>
-        <br/>
-        <div><a href="http://www.radiownet.pl/#/program" target="_blank" style="text-decoration: none;">Pokaż pełną ramówkę</a></div>
-        <div style="clear:both;"></div>
-        <div id="panel_player" >
-            <div id="current_title">tytuł</div>
-            <div style="width: 270px;display: inline-block;">
-                <div id="button_play" ></div>
-                <div id="button_pause"></div>
-                <div id="button_stop" ></div>
-
-                <div id="volume_panel" >
-                    <span class="tooltip"></span> <!-- Tooltip --><br/>
-                    <div id="slider"></div> <span class="volume"></span> <!-- Volume -->
+        <div style="width: 430px;">
+            <div style="width: 300px;float: left;">
+                <div style="width: 280px;">
+                    <div style="width: 215px;float: left;"><a href="http://www.radiownet.pl/" target="_blank"><img align="top" height="60px;" src="img/WNet_logo.png"/></a></div>
+                    <div id="aktualna_godzina"></div>
                 </div>
-            </div> 
-            <div id="seek_panel"  >
-                <div id="master"></div><span id="from-to" >00:00:00/00:00:00</span>
+                <div style="clear:both;"></div>
+                <br/>
+                <div class="button_play_list"  id="elem_0" style="float: left;width: 32px;"></div>
+                <div style="height: 55px; " >
+                    <span style="color:#555 ;">Aktualnie na antenie od: </span><span  id="currentBroadCastStartFormatted"></span>
+                    <div id="player_header_current">Tytuł</div>
+                </div>
+                <span style="color:#555 ;">Następnie na antenie od: </span><span  id="nextBroadCastStartFormatted"></span>
+                <br/>
+                <div id="player_header_next">Tytuł</div>
+                <br/>
+                <div><a href="http://www.radiownet.pl/#/program" target="_blank" style="text-decoration: none;">Pokaż pełną ramówkę</a></div>
+                <div style="clear:both;"></div>
+                <div id="panel_player" >
+                    <div id="current_title">tytuł</div>
+                    <div style="width: 270px;display: inline-block;">
+                        <div id="button_play" ></div>
+                        <div id="button_pause"></div>
+                        <div id="button_stop" ></div>
+
+                        <div id="volume_panel" >
+                            <span class="tooltip"></span> <!-- Tooltip --><br/>
+                            <div id="slider"></div> <span class="volume"></span> <!-- Volume -->
+                        </div>
+                    </div> 
+                    <div id="seek_panel"  >
+                        <div id="master"></div><span id="from-to" >00:00:00/00:00:00</span>
+                    </div>
+
+                </div>
+
+
+                <div id="panel_lista">
+                    <div id="eter"><span style="font-weight: bold;">Poranki</span>&nbsp;<span id="wiecej_porankow"><a href="http://www.radiownet.pl/etery/poranki/" target="_blank" >więcej ...</a></span>
+                    </div>
+                    <div id="playLista"></div>
+                </div>
+                <div style="clear:both;"></div>
+                <div id="footer">
+                    <div id="options">&nbsp;<a id="go-to-options" href="#">opcje</a></div>
+                    <div id="version"></div>
+                </div>
+
+            </div>
+            <div style="text-align: left;display: inline-block;">
+                <div style=" border-bottom:  1px solid #ff910e;width: 120px;padding: 0px 5px 5px 5px;  ">
+                    <a href="#" id="a_sub" style="text-decoration: none;font-weight: bold;color:red;">sub</a>&nbsp;&nbsp;<a href="#" id="a_all" style="text-decoration: none;font-weight: bold;">all</a>
+                    &nbsp;<a id="go-to-etery" style="text-decoration: none;font-weight: bold;" href="#">etery</a>
+                </div>
+                <br/>
+                <div id="panel_etery" >
+                </div>
             </div>
 
-        </div>
-
-        <div style="clear:both;"></div>
-        <br/>
-        <span style="font-weight: bold;">Poranki</span>&nbsp;<span id="wiecej_porankow"><a href="http://www.radiownet.pl/etery/poranki/" target="_blank" >pozostałe ...</a></span>
-        <div  style="display: inline-block;border-top: 1px solid #ff910e;"/>
-        <div id="playLista">
-        </div>
-        <div id="footer">
-            <div id="options"><a id="go-to-options" href="#">opcje</a></div>
-            <div id="version"></div>
         </div>
     </body>
 </html>

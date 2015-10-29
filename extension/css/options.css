@@ -19,6 +19,70 @@ h4{
 }
 
 p{color: #505050;
-    line-height: 15px;
-    font-size: 12px;
-    font-family: Arial,Helvetica,Verdana,sans-serif;}
+  line-height: 15px;
+  font-size: 12px;
+  font-family: Arial,Helvetica,Verdana,sans-serif;
+}
+
+.menu-elem
+{
+    color: black;
+    font-size: large;
+    font-weight: bold;
+    text-decoration: none;
+}
+.menu-elem:hover
+{
+    color: blue;
+}
+#selected{
+    color: blue;
+}
+
+
+#etery_panel{
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#ostanio_aktualizowane
+{
+
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+.ether_element{
+
+    display: inline-block;
+    padding: 7px;
+    border-bottom: 1px solid silver;
+    width: 95%;
+}
+.button_dodaj
+{
+    height: 20px;
+    float: left;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-image: url("../img/list-add.png");
+    cursor: pointer;	
+    margin-right: 10px;
+}
+
+.button_usun
+{
+    height: 20px;
+    float: left;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-image: url("../img/list-remove.png");
+    cursor: pointer;	
+    margin-right: 10px;
+}
+.ether_element a {
+
+    text-decoration: none;
+    font-weight: bold;
+}

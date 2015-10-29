@@ -1,3 +1,6 @@
+body{
+    font-family: Verdana, Arial, sans-serif;
+}
 #wiecej_porankow a{
     font-size: 11px; 
     text-decoration: none;
@@ -68,7 +71,7 @@
 
 }
 #playLista{
-    margin-top: 8px;
+    display: inline-block;
 }
 .button_play_list {
     float:left;
@@ -81,17 +84,19 @@
 }
 .playListElement{
     width: 280px;
-    height:  40px;
+    height:  auto;
     display: inline-block;
-
+    padding: 3px 0px 3px 3px;     
 }
+
 .playListElement a{
     font-weight: bold;
     text-decoration: none;
 }
+
 .element_a
 {
-    float:left; width:190px;
+    float:left; width:240px;
 }
 
 #panel_player
@@ -149,26 +154,54 @@
     color:#555 ;
 }
 
+#panel_etery {
+    width: 130px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 470px;
+    float: right;
+    text-align: left;
+}
+
+
+.ether_element{
+    display: inline-block;
+    padding: 7px 0px 7px 0px;
+    border-bottom: 1px solid silver;
+    width: 95%;
+
+}
+
+.ether_element a {
+    padding-top: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+#panel_lista{
+    margin-top: 10px;
+    height: auto;
+}
+
 #footer
 {
     width: 290px;
     border-bottom:  1px solid #ff910e;
-    display: inline-block;
     margin-top: 5px;
-    
-}
 
+}
 #footer #options
 {
     text-align: left;
     width: 220px;
     float: left;
     text-decoration: none;
-    
+
 }
 #footer #options a
 {
-    
+
     text-decoration: none;
     font-weight: bold;
     font-size: smaller;
@@ -181,4 +214,24 @@
     width: 67px;
     font-weight: bold;
     font-size: smaller;
+}
+
+
+#eter
+{
+    display: inline-block;
+    padding-top:5px;
+    border-bottom:  1px solid #ff910e;
+    width: 280px;
+    height: 35px;
+
+}
+
+
+.playListElement_img:hover
+{
+    background-color: #ffdb9c;
+}
+.ether_element:hover{
+    background-color: #ffdb9c;
 }

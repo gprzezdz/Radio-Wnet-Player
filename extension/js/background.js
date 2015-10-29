@@ -5,30 +5,46 @@ $(document).ready(function () {
     var Stream = localStorage["stream"];
     if (Stream === undefined)
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     } else if (Stream === "64")
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
     } else if (Stream === "32")
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
     } else {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     }
-    console.log = function () {
-    }
+//    console.log = function () {
+    //  }
 });
-
+var panelSubAll = "sub";
+var dokumentPanel;
 var wnetPlayer;
 var currentPlayID = "0";
 var playLista;
 
-var arrayListaSort = [];
 
 var panelPlayer;
 var elemZero;
 var seekSlider;
+var currentEter = "2064";
+var panel_lista;
 
+function setPanelSubAll($par)
+{
+    panelSubAll = $par;
+}
+
+function getPanelSubAll()
+{
+    return panelSubAll;
+}
+
+function setDokumentPanel($par)
+{
+    dokumentPanel = $par;
+}
 function getCurrentPlayElement()
 {
     return arrayLista[getCurrentPlayID()];
@@ -43,9 +59,9 @@ function getCurrentTime()
 {
     return parseInt(wnetPlayer.currentTime);
 }
+
 function setCurrentTime($par)
 {
-
     wnetPlayer.currentTime = $par;
 }
 function getDuration()
@@ -139,7 +155,6 @@ function setPlay()
     if (getCurrentPlayID() === "0" && (getWnetPlayerStatus() === "stoped" || getWnetPlayerStatus() === "paused"))
     {
         console.log("zzzz: " + arrayLista["0"].audio_file_name);
-
         wnetPlayer.src = arrayLista["0"].audio_file_name;
         wnetPlayer.load();
     }
@@ -204,72 +219,24 @@ function getAktualnieNaAntenie($par_tytul, $par_tytul_next, $par_curr_od, $par_n
 }
 
 
-function getLastPoranki($par_div)
-{
-    arrayListaSort = [];
-    playLista = $par_div;
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/getBroadcastListByEtherId.php?etherId=2064", true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            var resp = JSON.parse(xhr.responseText);
-            if (resp.broadcasts[0] === undefined)
-            {
-                playLista.append("brak danych");
-            }
-            var i = 0;
-            $.each(resp, function (key, arr) {
-                $.each(arr, function (key1, arr1) {
-
-                    arrayLista["" + arr1.id + ""] = arr1;
-                    arrayListaSort[i] = "" + arr1.id + "";
-                    i++;
-                });
-            });
-            addClickElement();
-        }
-        if (getWnetPlayerStatus() === "paused")
-            ustawPause();
-        if (getWnetPlayerStatus() === "playing")
-            ustawPlay();
-        if (getWnetPlayerStatus() === "stoped")
-            ustawStop();
-    };
-    xhr.send();
-}
-
 function setArrayLiasta(par_id, par_arr)
 {
     arrayLista[par_id] = par_arr;
 }
-function addClickElement()
-{
-    for (var i = 0; i < arrayListaSort.length; i++)
-    {
-        key = arrayListaSort[i];
-        arr = arrayLista[key];
-        if (key !== "0")
-        {
-            var aa = '<div class="playListElement"><div class="button_play_list"  id="elem_' + key + '" ></div><a href="' + arr.url + '" target="_blank"><img style="float:left;padding-right:3px;" height=32px src="' + arr.avatar_file_name + '"/></a><div class="element_a" ><a href="' + arr.url + '" target="_blank">' + arr.title + '</a></div><div>';
 
-            playLista.append(aa);
-            playLista.on("click", "#elem_" + key + "", {
-                arr: arr
-            }, clickPlayListElement);
-            playLista.find("#elem_" + key + "").mouseover({
-                arr: arr
-            }, hoverIn);
-            playLista.find("#elem_" + key + "").mouseout({
-                arr: arr
-            }, hoverOut);
-        }
-    }
-}
+
 function clickPlayListElement(event)
 {
-
-
-    playLista.find("#elem_" + event.data.arr.id + "").css("background-image", "url(img/media-playback-start_on.png)");
+    if (event.data.arr.attachment_content_type === null || event.data.arr.attachment_content_type.toLowerCase().indexOf("audio") === -1)
+    {
+        $.each(arrayLista, function (key, arr) {
+            playLista.find("#playListElement_" + arr.id + "").css("background-color", "transparent");
+        });
+        playLista.find("#playListElement_" + event.data.arr.id + "").css("background-color", "#ffdb9c");
+        window.open(event.data.arr.url);
+        return;
+    }
+    playLista.find("#playListElement_" + event.data.arr.id + "").css("background-color", "#ffdb9c");
     if (getCurrentPlayID() === "0")
     {
         wnetPlayer.src = arrayLista["0"].audio_file_name;
@@ -283,22 +250,12 @@ function clickPlayListElement(event)
         wnetPlayer.load();
         setCurrentPlayID(event.data.arr.id);
     }
-
     setPlay();
 }
 
 
 function ustawStop()
 {
-    elemZero.css("background-image", "url(img/media-playback-start.png)");
-    $.each(arrayLista, function (key, arr) {
-        if (getCurrentPlayID() === arr.id)
-        {
-            playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-stop_on.png)");
-        } else
-            playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-start.png)");
-    }
-    );
     if (getCurrentPlayID() === "0")
     {
         elemZero.css("background-image", "url(img/media-playback-stop_on.png)");
@@ -312,8 +269,7 @@ function ustawStop()
 function ustawPlay()
 {
     $.each(arrayLista, function (key, arr) {
-
-        playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-start.png)");
+        playLista.find("#playListElement_" + arr.id + "").css("background-color", "transparent");
     }
     );
     if (getCurrentPlayID() === "0")
@@ -323,7 +279,7 @@ function ustawPlay()
     {
         elemZero.css("background-image", "url(img/media-playback-start.png)");
     }
-    playLista.find("#elem_" + getCurrentPlayID() + "").css("background-image", "url(img/media-playback-start_on.png)");
+    playLista.find("#playListElement_" + getCurrentPlayID() + "").css("background-color", "#ffdb9c");
     panelPlayer.find("#button_play").css("background-image", "url(img/media-playback-start_on.png)");
     panelPlayer.find("#button_stop").css("background-image", "url(img/media-playback-stop.png)");
     panelPlayer.find("#button_pause").css("background-image", "url(img/media-playback-pause.png)");
@@ -332,10 +288,6 @@ function ustawPlay()
 
 function ustawPause()
 {
-    $.each(arrayLista, function (key, arr) {
-        playLista.find("#elem_" + key).css("background-image", "url(img/media-playback-start.png)");
-
-    });
     if (getCurrentPlayID() === "0")
     {
         elemZero.css("background-image", "url(img/media-playback-pause_on.png)");
@@ -343,7 +295,6 @@ function ustawPause()
     {
         elemZero.css("background-image", "url(img/media-playback-start.png)");
     }
-    playLista.find("#elem_" + getCurrentPlayID() + "").css("background-image", "url(img/media-playback-pause_on.png)");
     panelPlayer.find("#button_play").css("background-image", "url(img/media-playback-start.png)");
     panelPlayer.find("#button_stop").css("background-image", "url(img/media-playback-stop.png)");
     panelPlayer.find("#button_pause").css("background-image", "url(img/media-playback-pause_on.png)");
@@ -395,10 +346,6 @@ function hoverOut(event)
     }
 }
 
-
-
-
-
 function hoverPanelPlayerIn(event)
 {
     if (event.data.button === "stop" && getWnetPlayerStatus() !== "stoped")
@@ -441,4 +388,187 @@ function hoverPanelPlayerOut(event)
     {
         panelPlayer.find("#button_pause").css("background-image", "url(img/media-playback-pause.png)");
     }
+}
+
+function ladujEterySubPanel(panel_etery)
+{
+    setPanelSubAll("sub");
+    panel_etery.empty();
+    var Etery = localStorage["etery"];
+    //$("#etery_panel").append("<div>aaa</div>");
+    var xhr = new XMLHttpRequest();
+    if (Etery === undefined || Etery === "")
+    {
+        Etery = "2064";
+    }
+    Etery = Etery + ",2064";
+    xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/gp/getEthers.php?ac=subp&eids=" + Etery.replace("undefined", "", Etery), true);
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4) {
+            panel_etery.empty();
+            var resp = JSON.parse(xhr.responseText);
+            var i = 0;
+            $.each(resp, function (key, arr) {
+                var tmp = "";
+                if (arr.id === getCurrentEter())
+                {
+                    tmp = ' style ="background-color:#ffdb9c;"';
+                }
+
+                var aa = '<div id="div_ether_element_' + i + '" class="ether_element" ' + tmp + '  >\n\
+                           <img id="ether_element_' + arr.id + '" style="float:left;padding-right:3px;cursor:pointer;" height=42px src="' + arr.avatar_file_name + '"/>\n\
+                            <a id="ether_element_' + arr.id + '" href="#"  >' + arr.name + '</a><br/><i style="font-size:11px;">' + arr.publication_date + '</i><div>';
+                panel_etery.append(aa);
+                panel_etery.on("click", "#ether_element_" + arr.id + "", {
+                    arr: arr
+                }, clickEtherSublement);
+                i++;
+            });
+        }
+    };
+    xhr.send();
+}
+
+function ladujEteryAllPanel(panel_etery)
+{
+    setPanelSubAll("all");
+    panel_etery.empty();
+    var Etery = localStorage["etery"];
+    //$("#etery_panel").append("<div>aaa</div>");
+    var xhr = new XMLHttpRequest();
+    if (Etery === undefined || Etery === "")
+    {
+        Etery = "2064";
+    }
+    Etery = Etery + ",2064";
+    xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/gp/getEthers.php?ac=last&eids=" + Etery.replace("undefined", "", Etery), true);
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4) {
+            panel_etery.empty();
+            var resp = JSON.parse(xhr.responseText);
+            var i = 0;
+            $.each(resp, function (key, arr) {
+                var tmp = "";
+                if (arr.id === getCurrentEter())
+                {
+                    tmp = ' style ="background-color:#ffdb9c;"';
+                }
+
+                var aa = '<div id="div_ether_element_' + i + '" class="ether_element" ' + tmp + '  >\n\
+                           <img id="ether_element_' + arr.id + '" style="float:left;padding-right:3px;cursor:pointer;" height=42px src="' + arr.avatar_file_name + '"/>\n\
+                            <a id="ether_element_' + arr.id + '" href="#"  >' + arr.name + '</a><br/><i style="font-size:11px;">' + arr.publication_date + '</i><div>';
+                panel_etery.append(aa);
+                panel_etery.on("click", "#ether_element_" + arr.id + "", {
+                    arr: arr
+                }, clickEtherSublement);
+                i++;
+            });
+        }
+    };
+    xhr.send();
+}
+
+function clickEtherSublement(event)
+{
+    var i = 0;
+    while (dokumentPanel.find("#div_ether_element_" + i + "").length)
+    {
+        console.log("i:" + i);
+        dokumentPanel.find("#div_ether_element_" + i + "").css("background-color", "transparent");
+        i++;
+    }
+    $(event.target.parentNode).css("background-color", "#ffdb9c");
+    ustalPanelLista(panel_lista, event.data.arr.id);
+}
+
+function ustalPanelLista($panel_lista, $par_eter)
+{
+
+    setCurrentEter($par_eter);
+    panel_lista = $panel_lista;
+    panel_lista.find("#eter").empty();
+    panel_lista.find("#playLista").empty();
+    if ($par_eter === undefined || $par_eter === "")
+    {
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    console.log("http://www.radiownet.pl/wnetplayer/MobileAppApi/gp/getEthers.php?ac=eter&eids=" + $par_eter);
+    xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/gp/getEthers.php?ac=eter&eids=" + $par_eter, true);
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4) {
+            console.log(xhr.responseText);
+            var resp = JSON.parse(xhr.responseText);
+            var aa = '<a href="' + resp.eter.url + '" target="_blank" ><img style="float:left;padding-right:3px;" height=32px src="' + resp.eter.avatar_file_name + '"/></a><a href="' + resp.eter.url + '" target="_blank" style="text-decoration:none;"><span style="font-weight: bold;">' + resp.eter.name + ' </span></a>&nbsp;<span id="wiecej_porankow"> <a href="' + resp.eter.url + '" target="_blank" >więcej ...</a></span>';
+            panel_lista.find("#eter").append(aa);
+            fillEter(panel_lista.find("#playLista"), resp.posts);
+        }
+    };
+    xhr.send();
+    if (getWnetPlayerStatus() === "stoped")
+    {
+        ustawStop();
+    } else if (getWnetPlayerStatus() === "playing")
+    {
+        ustawPlay();
+    } else
+    {
+        ustawPause();
+    }
+}
+
+
+
+function fillEter($par, $posts)
+{
+    playLista = $par;
+    playLista.empty();
+    var aa = '';
+    for (var i = 0; i < $posts.length; i++)
+    {
+        src_img = "";
+        if ($posts[i].attachment_content_type === null)
+        {
+            src_img = "img/text.png";
+        } else if ($posts[i].attachment_content_type.toLowerCase().indexOf("audio") >= 0)
+        {
+            src_img = "img/audio.png";
+        } else if ($posts[i].attachment_content_type.toLowerCase().indexOf("video") >= 0)
+        {
+            src_img = "img/movie.png";
+        } else
+        {
+            src_img = "img/text.png";
+        }
+
+        aa = '<div class="playListElement" id="playListElement_' + $posts[i].id + '">\n\
+                <img id="elem_' + $posts[i].id + '" class="playListElement_img"  style="cursor:pointer;float:left;padding-right:3px;" height=32px src="' + src_img + '"/>\n\
+            <div class="element_a" ><a href="' + $posts[i].url + '" target="_blank">' + $posts[i].title + '</a><i style="font-size:11px;"> ' + $posts[i].publication_date + '</i></div>\n\
+            <div>';
+
+        playLista.append(aa);
+        if (getCurrentPlayID() === $posts[i].id)
+        {
+            playLista.find("#playListElement_" + $posts[i].id + "").css("background-color", "#ffdb9c");
+        }
+        arr = $posts[i];
+        arrayLista[$posts[i].id + ""] = $posts[i];
+        playLista.on("click", "#elem_" + $posts[i].id + "", {
+            arr: arr
+        }, clickPlayListElement);
+    }
+}
+
+
+function getCurrentEter()
+{
+    return currentEter;
+}
+
+function setCurrentEter($par)
+{
+    currentEter = $par;
 }
