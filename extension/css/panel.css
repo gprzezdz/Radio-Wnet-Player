@@ -106,9 +106,28 @@ body{
 }
 #current_title{
     text-align: left;
-    padding: 0px 5px 5px 5px;
+    padding: 5px 5px 5px 0px;
     font-weight: bold;
+    border: 0px solid red;
 }
+
+#current_autor{
+    text-align: left;
+    border: 0px solid red;
+    cursor: pointer;
+    width: 200px;
+    margin-left: 60px;
+}
+
+#current_logo{
+    border: 0px solid red;
+    width: 55px;
+    float: left; 
+    padding-right: 3px;
+    cursor: pointer;
+    padding-bottom: 5px;
+}
+
 #volume_panel {
     cursor: pointer;		    	    
     width: 157px;
