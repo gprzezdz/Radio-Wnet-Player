@@ -5,16 +5,17 @@ $(document).ready(function () {
     var Stream = localStorage["stream"];
     if (Stream === undefined)
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     } else if (Stream === "64")
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
     } else if (Stream === "32")
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
     } else {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     }
+//    1043
 //    console.log = function () {
     //  }
 });
@@ -165,16 +166,39 @@ function setPlay()
         seekSlider.slider("option", "value", 0);
         seekSlider.slider("option", "max", 0);
         panelPlayer.find("#current_title").text(arrayLista["0"].title);
+        panelPlayer.find("#current_autor").html('<a href="#"   style="text-decoration:none;"> <span style="font-weight: bold;">' + arrayLista["0"].name + '</span></a>');
+        panelPlayer.find("#current_logo").empty();
+        panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista["0"].avatar_file_name + "\">");
+
     } else
     {
         panelPlayer.find("#current_title").text(arrayLista[getCurrentPlayID()].title);
+        panelPlayer.find("#current_autor").html('<a href="#"  style="text-decoration:none;"><span style="font-weight: bold;">' + arrayLista[getCurrentPlayID()].name + '</span></a>');
+        console.log(JSON.stringify(arrayLista[getCurrentPlayID()]) + "");
+        panelPlayer.find("#current_logo").empty();
+        panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista[getCurrentPlayID()].avatar_file_name + "\">");
+        console.log("url(" + arrayLista[getCurrentPlayID()].avatar_file_name + ")");
         seekSlider.slider("option", "value", wnetPlayer.currentTime);
         seekSlider.slider("option", "max", wnetPlayer.duration);
+
     }
-
+    /*if ($("#current_logo").data('events') === undefined)
+     {
+     panelPlayer.on("click", "#current_logo", clickCurrent);
+     }
+     
+     if ($("#current_autor").data('events') === undefined)
+     {
+     panelPlayer.on("click", "#current_autor", clickCurrent);
+     }*/
     ustawPlay();
-}
 
+}
+function clickCurrent()
+{
+    console.log("arrayLista[getCurrentPlayID()].eter_id" + arrayLista[getCurrentPlayID()].eter_id);
+    ustalPanelLista(panel_lista, arrayLista[getCurrentPlayID()].eter_id);
+}
 
 function setStop()
 {
@@ -201,6 +225,9 @@ function getAktualnieNaAntenie($par_tytul, $par_tytul_next, $par_curr_od, $par_n
             if (resp.broadcasts[0] === undefined)
             {
                 arrayLista["0"] = "Aktualnie na antenie";
+                panelPlayer.find("#current_logo").empty();
+                panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista[getCurrentPlayID()].avatar_file_name + "\">");
+                panelPlayer.find("#current_autor").html('<a href="#"  style="text-decoration:none;"><span style="font-weight: bold;">' + arrayLista[getCurrentPlayID()].name + '</span></a>');
                 return $par_tytul.html("");
             }
             arrayLista["0"].title = resp.broadcasts[0].title;
@@ -214,6 +241,14 @@ function getAktualnieNaAntenie($par_tytul, $par_tytul_next, $par_curr_od, $par_n
             $par_next_od.html(resp.broadcasts[1].start_formatted);
         }
         panelPlayer.find("#current_title").text(arrayLista[getCurrentPlayID()].title);
+
+
+        console.log(JSON.stringify(arrayLista[getCurrentPlayID()]) + "");
+        panelPlayer.find("#current_logo").empty();
+        panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista[getCurrentPlayID()].avatar_file_name + "\">");
+        panelPlayer.find("#current_autor").html('<a href="#"  style="text-decoration:none;"><span style="font-weight: bold;">' + arrayLista[getCurrentPlayID()].name + '</span></a>');
+
+
     }
     xhr.send();
 }
@@ -395,7 +430,6 @@ function ladujEterySubPanel(panel_etery)
     setPanelSubAll("sub");
     panel_etery.empty();
     var Etery = localStorage["etery"];
-    //$("#etery_panel").append("<div>aaa</div>");
     var xhr = new XMLHttpRequest();
     if (Etery === undefined || Etery === "")
     {
@@ -435,7 +469,6 @@ function ladujEteryAllPanel(panel_etery)
     setPanelSubAll("all");
     panel_etery.empty();
     var Etery = localStorage["etery"];
-    //$("#etery_panel").append("<div>aaa</div>");
     var xhr = new XMLHttpRequest();
     if (Etery === undefined || Etery === "")
     {
@@ -483,19 +516,19 @@ function clickEtherSublement(event)
     ustalPanelLista(panel_lista, event.data.arr.id);
 }
 
+
 function ustalPanelLista($panel_lista, $par_eter)
 {
-
     setCurrentEter($par_eter);
     panel_lista = $panel_lista;
     panel_lista.find("#eter").empty();
     panel_lista.find("#playLista").empty();
+    console.log("$par_eter" + $par_eter);
     if ($par_eter === undefined || $par_eter === "")
     {
         return;
     }
     var xhr = new XMLHttpRequest();
-    console.log("http://www.radiownet.pl/wnetplayer/MobileAppApi/gp/getEthers.php?ac=eter&eids=" + $par_eter);
     xhr.open("GET", "http://www.radiownet.pl/wnetplayer/MobileAppApi/gp/getEthers.php?ac=eter&eids=" + $par_eter, true);
     xhr.onreadystatechange = function () {
 

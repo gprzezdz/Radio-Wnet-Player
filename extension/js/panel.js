@@ -6,18 +6,21 @@ $(document).ready(function () {
     if (Stream === undefined)
     {
         Stream = "128";
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     } else if (Stream === "64")
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream64", url: "http://radiownet.pl"};
     } else if (Stream === "32")
     {
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream32", url: "http://radiownet.pl"};
     } else {
         Stream = "128";
-        arrayLista["0" ] = {id: "0", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
+        arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", avatar_file_name: "img/WNet_logo_footer.png", attachment_content_type: "audio/mp3", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     }
-
+    //panelPlayer.on("click", "#current_logo", chrome.extension.getBackgroundPage().clickCurrent);
+    //panelPlayer.on("click", "#current_autor", chrome.extension.getBackgroundPage().clickCurrent);
+    $("#current_autor").on("click", chrome.extension.getBackgroundPage().clickCurrent);
+    $("#current_logo").on("click", chrome.extension.getBackgroundPage().clickCurrent);
     $("#elem_0").on("click", {
         arr: arrayLista["0"]
     }, chrome.extension.getBackgroundPage().clickPlayListElement);
