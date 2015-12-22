@@ -7,9 +7,12 @@ $(document).ready(function () {
     var Stream = localStorage["stream"];
 
     arrayHistoria = localStorage["historia"];
-    if (arrayHistoria !== "")
+    if (arrayHistoria !==undefined && arrayHistoria !== "")
     {
         arrayHistoria = JSON.parse(arrayHistoria);
+    }else
+    {
+        arrayHistoria ={};
     }
     if (Stream === undefined)
     {
