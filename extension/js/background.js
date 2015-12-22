@@ -1,8 +1,16 @@
 var arrayLista = {};
+var arrayHistoria = {};
 $(document).ready(function () {
+
 
     wnetPlayer = document.getElementById("wnetPlayer");
     var Stream = localStorage["stream"];
+
+    arrayHistoria = localStorage["historia"];
+    if (arrayHistoria !== "")
+    {
+        arrayHistoria = JSON.parse(arrayHistoria);
+    }
     if (Stream === undefined)
     {
         arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
@@ -15,11 +23,14 @@ $(document).ready(function () {
     } else {
         arrayLista["0" ] = {id: "0", eter_id: "1043", name: "Radio Wnet", title: "Aktualny poranek", attachment_content_type: "audio/mp3", avatar_file_name: "img/WNet_logo_footer.png", audio_file_name: "http://audio.radiownet.pl:8000/stream", url: "http://radiownet.pl"};
     }
+    hist_czas();
+    setInterval(function () {
+        hist_czas();
+    }, 3000);
 //    1043
 //    console.log = function () {
     //  }
-    console.log = function () {
-      }
+
 });
 var panelSubAll = "sub";
 var dokumentPanel;
@@ -152,16 +163,15 @@ function getWnetPlayerStatus()
 
 function setPlay()
 {
-
     if (!(getWnetPlayerStatus() === "paused" || getWnetPlayerStatus() === "stoped"))
         return;
     if (getCurrentPlayID() === "0" && (getWnetPlayerStatus() === "stoped" || getWnetPlayerStatus() === "paused"))
     {
-        console.log("zzzz: " + arrayLista["0"].audio_file_name);
+        //console.log("zzzz: " + arrayLista["0"].audio_file_name);
         wnetPlayer.src = arrayLista["0"].audio_file_name;
         wnetPlayer.load();
     }
-    console.log(wnetPlayer);
+    //console.log(wnetPlayer);
     wnetPlayer.play();
     if (getCurrentPlayID() === "0")
     {
@@ -171,34 +181,26 @@ function setPlay()
         panelPlayer.find("#current_autor").html('<a href="#"   style="text-decoration:none;"> <span style="font-weight: bold;">' + arrayLista["0"].name + '</span></a>');
         panelPlayer.find("#current_logo").empty();
         panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista["0"].avatar_file_name + "\">");
-
     } else
     {
         panelPlayer.find("#current_title").text(arrayLista[getCurrentPlayID()].title);
         panelPlayer.find("#current_autor").html('<a href="#"  style="text-decoration:none;"><span style="font-weight: bold;">' + arrayLista[getCurrentPlayID()].name + '</span></a>');
-        console.log(JSON.stringify(arrayLista[getCurrentPlayID()]) + "");
         panelPlayer.find("#current_logo").empty();
         panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista[getCurrentPlayID()].avatar_file_name + "\">");
-        console.log("url(" + arrayLista[getCurrentPlayID()].avatar_file_name + ")");
         seekSlider.slider("option", "value", wnetPlayer.currentTime);
         seekSlider.slider("option", "max", wnetPlayer.duration);
+        arrayLista[getCurrentPlayID()].hist_czas = $.now();
+        arrayLista[getCurrentPlayID()].currentTime = 0;
+
+        arrayHistoria[getCurrentPlayID() + ""] = arrayLista[getCurrentPlayID()];
 
     }
-    /*if ($("#current_logo").data('events') === undefined)
-     {
-     panelPlayer.on("click", "#current_logo", clickCurrent);
-     }
-     
-     if ($("#current_autor").data('events') === undefined)
-     {
-     panelPlayer.on("click", "#current_autor", clickCurrent);
-     }*/
     ustawPlay();
-
 }
+
 function clickCurrent()
 {
-    console.log("arrayLista[getCurrentPlayID()].eter_id" + arrayLista[getCurrentPlayID()].eter_id);
+
     ustalPanelLista(panel_lista, arrayLista[getCurrentPlayID()].eter_id);
 }
 
@@ -245,7 +247,7 @@ function getAktualnieNaAntenie($par_tytul, $par_tytul_next, $par_curr_od, $par_n
         panelPlayer.find("#current_title").text(arrayLista[getCurrentPlayID()].title);
 
 
-        console.log(JSON.stringify(arrayLista[getCurrentPlayID()]) + "");
+
         panelPlayer.find("#current_logo").empty();
         panelPlayer.find("#current_logo").append("<img width=\"55px\" src=\"" + arrayLista[getCurrentPlayID()].avatar_file_name + "\">");
         panelPlayer.find("#current_autor").html('<a href="#"  style="text-decoration:none;"><span style="font-weight: bold;">' + arrayLista[getCurrentPlayID()].name + '</span></a>');
@@ -264,6 +266,7 @@ function setArrayLiasta(par_id, par_arr)
 
 function clickPlayListElement(event)
 {
+    arrayLista[event.data.arr.id] = event.data.arr;
     if (event.data.arr.attachment_content_type === null || event.data.arr.attachment_content_type.toLowerCase().indexOf("audio") === -1)
     {
         $.each(arrayLista, function (key, arr) {
@@ -280,12 +283,15 @@ function clickPlayListElement(event)
     }
     if ((getCurrentPlayID() !== event.data.arr.id))
     {
-        console.log("arrayLista[0].audio_file_name " + event.data.arr.title);
-        console.log("id: " + event.data.arr.id);
-        console.log("audio_file_name" + event.data.arr.audio_file_name);
+
+
         wnetPlayer.src = event.data.arr.audio_file_name;
         wnetPlayer.load();
         setCurrentPlayID(event.data.arr.id);
+        if (arrayHistoria[getCurrentPlayID() + ""] !== undefined)
+        {
+            wnetPlayer.currentTime = arrayHistoria[getCurrentPlayID() + ""].currentTime;
+        }
     }
     setPlay();
 }
@@ -427,6 +433,73 @@ function hoverPanelPlayerOut(event)
     }
 }
 
+
+function ladujHistPanel(panel_etery)
+{
+    setPanelSubAll("hist");
+    panel_etery.empty();
+    var temp = [];
+    var tah = {};
+    var i = 0;
+    $.each(arrayHistoria, function (key, tmp1) {
+        tmp1.id = key;
+        temp.push({k: tmp1.hist_czas, v: tmp1});
+    });
+
+    temp.sort(function (a, b) {
+        if (a.k > b.k) {
+            return -1
+        }
+        if (a.k < b.k) {
+            return 1
+        }
+        return 0;
+    });
+    var aa = '';
+    $.each(temp, function (key, tmp1) {
+
+        if (i < 30)
+        {
+            tah[tmp1.v.id] = tmp1.v;
+            console.log("xxxx: " + key + " -> " + JSON.stringify(tmp1.v));
+            src_img = "";
+            if (tmp1.v.attachment_content_type === null)
+            {
+                src_img = "img/text.png";
+            } else if (tmp1.v.attachment_content_type.toLowerCase().indexOf("audio") >= 0)
+            {
+                src_img = "img/audio.png";
+            } else if (tmp1.v.attachment_content_type.toLowerCase().indexOf("video") >= 0)
+            {
+                src_img = "img/movie.png";
+            } else
+            {
+                src_img = "img/text.png";
+            }
+
+            aa = '<div    class="playListElement" id="playListElement_' + tmp1.v.id + '">\n\
+                <img id="elem_' + tmp1.v.id + '" class="playListElement_img"  style="cursor:pointer;float:left;padding-right:3px;" height=32px src="' + src_img + '"/>\n\
+            <div style="width:110px;" class="element_a" ><a href="' + tmp1.v.url + '" target="_blank">' + tmp1.v.title + '</a><i style="font-size:11px;"> ' + tmp1.v.publication_date + '</i></div>\n\
+            <div>';
+
+            panel_etery.append(aa);
+            arr = tmp1.v;
+            console.log("");
+            console.log("");
+            console.log("");
+            console.log("xyz: " + JSON.stringify(tmp1.v));
+            panel_etery.on("click", "#elem_" + tmp1.v.id + "", {
+                arr: arr
+            }, clickPlayListElement);
+        }
+        i++;
+    }
+    );
+    arrayHistoria = tah;
+
+
+}
+
 function ladujEterySubPanel(panel_etery)
 {
     setPanelSubAll("sub");
@@ -451,12 +524,12 @@ function ladujEterySubPanel(panel_etery)
                 {
                     tmp = ' style ="background-color:#ffdb9c;"';
                 }
-
+                var n = $.now();
                 var aa = '<div id="div_ether_element_' + i + '" class="ether_element" ' + tmp + '  >\n\
-                           <img id="ether_element_' + arr.id + '" style="float:left;padding-right:3px;cursor:pointer;" height=42px src="' + arr.avatar_file_name + '"/>\n\
-                            <a id="ether_element_' + arr.id + '" href="#"  >' + arr.name + '</a><br/><i style="font-size:11px;">' + arr.publication_date + '</i><div>';
+                           <img id="ether_element_' + arr.id + n + '" style="float:left;padding-right:3px;cursor:pointer;" height=42px src="' + arr.avatar_file_name + '"/>\n\
+                            <a id="ether_element_' + arr.id + n + '" href="#"  >' + arr.name + '</a><br/><i style="font-size:11px;">' + arr.publication_date + '</i><div>';
                 panel_etery.append(aa);
-                panel_etery.on("click", "#ether_element_" + arr.id + "", {
+                panel_etery.on("click", "#ether_element_" + arr.id + n + "", {
                     arr: arr
                 }, clickEtherSublement);
                 i++;
@@ -490,12 +563,12 @@ function ladujEteryAllPanel(panel_etery)
                 {
                     tmp = ' style ="background-color:#ffdb9c;"';
                 }
-
+                var n = $.now();
                 var aa = '<div id="div_ether_element_' + i + '" class="ether_element" ' + tmp + '  >\n\
-                           <img id="ether_element_' + arr.id + '" style="float:left;padding-right:3px;cursor:pointer;" height=42px src="' + arr.avatar_file_name + '"/>\n\
-                            <a id="ether_element_' + arr.id + '" href="#"  >' + arr.name + '</a><br/><i style="font-size:11px;">' + arr.publication_date + '</i><div>';
+                           <img id="ether_element_' + arr.id + n + '" style="float:left;padding-right:3px;cursor:pointer;" height=42px src="' + arr.avatar_file_name + '"/>\n\
+                            <a id="ether_element_' + arr.id + n + '" href="#"  >' + arr.name + '</a><br/><i style="font-size:11px;">' + arr.publication_date + '</i><div>';
                 panel_etery.append(aa);
-                panel_etery.on("click", "#ether_element_" + arr.id + "", {
+                panel_etery.on("click", "#ether_element_" + arr.id + n + "", {
                     arr: arr
                 }, clickEtherSublement);
                 i++;
@@ -510,7 +583,6 @@ function clickEtherSublement(event)
     var i = 0;
     while (dokumentPanel.find("#div_ether_element_" + i + "").length)
     {
-        console.log("i:" + i);
         dokumentPanel.find("#div_ether_element_" + i + "").css("background-color", "transparent");
         i++;
     }
@@ -525,7 +597,6 @@ function ustalPanelLista($panel_lista, $par_eter)
     panel_lista = $panel_lista;
     panel_lista.find("#eter").empty();
     panel_lista.find("#playLista").empty();
-    console.log("$par_eter" + $par_eter);
     if ($par_eter === undefined || $par_eter === "")
     {
         return;
@@ -535,7 +606,7 @@ function ustalPanelLista($panel_lista, $par_eter)
     xhr.onreadystatechange = function () {
 
         if (xhr.readyState === 4) {
-            console.log(xhr.responseText);
+
             var resp = JSON.parse(xhr.responseText);
             var aa = '<a href="' + resp.eter.url + '" target="_blank" ><img style="float:left;padding-right:3px;" height=32px src="' + resp.eter.avatar_file_name + '"/></a><a href="' + resp.eter.url + '" target="_blank" style="text-decoration:none;"><span style="font-weight: bold;">' + resp.eter.name + ' </span></a>&nbsp;<span id="wiecej_porankow"> <a href="' + resp.eter.url + '" target="_blank" >więcej ...</a></span>';
             panel_lista.find("#eter").append(aa);
@@ -606,4 +677,18 @@ function getCurrentEter()
 function setCurrentEter($par)
 {
     currentEter = $par;
+}
+
+function hist_czas()
+{
+    if (arrayHistoria === undefined)
+    {
+        return;
+    }
+    if (arrayHistoria [getCurrentPlayID() + ""] !== undefined)
+    {
+        arrayHistoria [getCurrentPlayID() + ""].currentTime = wnetPlayer.currentTime;
+        arrayHistoria [getCurrentPlayID() + ""].hist_czas = $.now();
+    }
+    localStorage["historia"] = JSON.stringify(arrayHistoria);
 }
