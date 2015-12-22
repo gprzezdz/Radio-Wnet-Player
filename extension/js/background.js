@@ -28,8 +28,8 @@ $(document).ready(function () {
         hist_czas();
     }, 3000);
 //    1043
-//    console.log = function () {
-    //  }
+    console.log = function () {
+     }
 
 });
 var panelSubAll = "sub";
