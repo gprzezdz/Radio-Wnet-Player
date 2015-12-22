@@ -95,19 +95,34 @@ $(document).ready(function () {
     });
     $("#a_sub").on("click", function (e) {
         $("#a_sub").css("color", "red");
+        $("#a_hist").css("color", "blue");
         $("#a_all").css("color", "blue");
         chrome.extension.getBackgroundPage().ladujEterySubPanel($("#panel_etery"));
     });
     $("#a_all").on("click", function (e) {
         $("#a_sub").css("color", "blue");
+        $("#a_hist").css("color", "blue");
         $("#a_all").css("color", "red");
         chrome.extension.getBackgroundPage().ladujEteryAllPanel($("#panel_etery"));
+    });
+    $("#a_hist").on("click", function (e) {
+        $("#a_sub").css("color", "blue");
+        $("#a_hist").css("color", "red");
+        $("#a_all").css("color", "blue");
+        chrome.extension.getBackgroundPage().ladujHistPanel($("#panel_etery"));
     });
     if (chrome.extension.getBackgroundPage().getPanelSubAll() === "all") {
         $("#a_sub").css("color", "blue");
         $("#a_all").css("color", "red");
+        $("#a_hist").css("color", "blue");
         chrome.extension.getBackgroundPage().ladujEteryAllPanel($("#panel_etery"));
+    } else if (chrome.extension.getBackgroundPage().getPanelSubAll() === "hist") {
+        $("#a_sub").css("color", "blue");
+        $("#a_hist").css("color", "red");
+        $("#a_all").css("color", "blue");
+        chrome.extension.getBackgroundPage().ladujHistPanel($("#panel_etery"));
     } else {
+        $("#a_hist").css("color", "blue");
         $("#a_sub").css("color", "red");
         $("#a_all").css("color", "blue");
         chrome.extension.getBackgroundPage().ladujEterySubPanel($("#panel_etery"));
