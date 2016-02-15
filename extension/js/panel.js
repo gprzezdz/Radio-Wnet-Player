@@ -44,8 +44,6 @@ $(document).ready(function () {
     chrome.extension.getBackgroundPage().setElemZero($("#elem_0"));
     chrome.extension.getBackgroundPage().setSeekSlider($("#master"));
     $("#current_title").text(chrome.extension.getBackgroundPage().getCurrentPlayElement().title);
-    //slider.value = chrome.extension.getBackgroundPage().getVolume();
-    //$("#slider").val(chrome.extension.getBackgroundPage().getVolume());
     if (!isNaN(chrome.extension.getBackgroundPage().getCurrentTime()))
     {
         $("#master").slider("option", "value", chrome.extension.getBackgroundPage().getCurrentTime());
@@ -84,7 +82,6 @@ $(document).ready(function () {
     }, 1000);
     $("#go-to-options").on("click", function (e) {
         if (chrome.runtime.openOptionsPage) {
-            // New way to open options pages, if supported (Chrome 42+).
             chrome.runtime.openOptionsPage();
         } else {
             window.open(chrome.runtime.getURL('options.html'));

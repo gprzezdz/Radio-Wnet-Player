@@ -1,18 +1,19 @@
 var arrayLista = {};
 var arrayHistoria = {};
+var hist_volume = 32;
 $(document).ready(function () {
 
 
     wnetPlayer = document.getElementById("wnetPlayer");
     var Stream = localStorage["stream"];
-
+    hist_volume = localStorage["hist_volume"];
     arrayHistoria = localStorage["historia"];
-    if (arrayHistoria !==undefined && arrayHistoria !== "")
+    if (arrayHistoria !== undefined && arrayHistoria !== "")
     {
         arrayHistoria = JSON.parse(arrayHistoria);
-    }else
+    } else
     {
-        arrayHistoria ={};
+        arrayHistoria = {};
     }
     if (Stream === undefined)
     {
@@ -30,9 +31,13 @@ $(document).ready(function () {
     setInterval(function () {
         hist_czas();
     }, 3000);
-//    1043
+    if (hist_volume === undefined)
+    {
+        hist_volume = 32;
+    }
+    chrome.extension.getBackgroundPage().setVolume(hist_volume);
 //    console.log = function () {
-  //   }
+    //   }
 
 });
 var panelSubAll = "sub";
@@ -88,6 +93,7 @@ function getDuration()
 function setVolume($par)
 {
     wnetPlayer.volume = $par / 100;
+    localStorage["hist_volume"] = $par;
 }
 function getVolume()
 {
@@ -381,8 +387,7 @@ function hoverOut(event)
                 getElemZero().css("background-image", "url(img/media-playback-stop_on.png)");
             else
                 getElemZero().css("background-image", "url(img/media-playback-pause_on.png)");
-        }
-        else
+        } else
         {
             if (getWnetPlayerStatus() === "stoped")
                 playLista.find("#elem_" + event.data.arr.id + "").css("background-image", "url(img/media-playback-stop_on.png)");
