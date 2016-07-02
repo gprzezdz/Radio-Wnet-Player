@@ -11,19 +11,24 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
         <script type="text/javascript" src="js/libs/jqueryui/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/options.js"></script>
         <script type="text/javascript" src="js/etery.js"></script>
     </head>
     <body>
         <div id="content">
-            <div id="menu"><a class="menu-elem" href="options.html">Strumień</a> <a class="menu-elem" id="selected" href="etery.html">Etery</a></div>
+            <div id="ul-options-menu">
+                <ul>
+                    <li ><a  href="options.html">Strumień</a> </li>
+                    <li id="selected-li"><a  href="etery.html">Etery</a></li>
+                    <li > <a   href="podziekowania.html">Podziękowania</a></li>
+                    <li > <a   href="informacje.html">Informacje</a></li>
+                </ul>
+            </div>
 
             <div id="menu-content">
                 <h4>Etery subskrybowane:</h4>
                 <div id="etery_panel">
-
                 </div>
-
-                <br/>
 
                 <h4>Dostępne etery:</h4>
                 <input type="text" id="szukaj_eteru" style="width: 200px; border: 1px solid silver;"><button id="b_szukaj">Szukaj eteru</button>
@@ -33,7 +38,7 @@ and open the template in the editor.
                 <h4>Aktualizacja ostatnie 7 dni.</h4>
                 <div id="ostanio_aktualizowane">
                     <div class="ether_element" >
-                        
+
                     </div>
                 </div>
             </div>

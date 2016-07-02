@@ -1,6 +1,8 @@
 $(document).ready(function () {
+   
     console.log = function () {
     }
+  
 
     var Stream = localStorage["stream"];
     if (Stream === undefined)
@@ -47,16 +49,14 @@ $(document).ready(function () {
     if (!isNaN(chrome.extension.getBackgroundPage().getCurrentTime()))
     {
         $("#master").slider("option", "value", chrome.extension.getBackgroundPage().getCurrentTime());
-    }
-    else
+    } else
     {
         $("#master").slider("option", "value", 0);
     }
     if (!isNaN(chrome.extension.getBackgroundPage().getDuration()))
     {
         $("#master").slider("option", "max", chrome.extension.getBackgroundPage().getDuration());
-    }
-    else
+    } else
     {
         $("#master").slider("option", "max", 0);
     }
@@ -80,48 +80,45 @@ $(document).ready(function () {
     setInterval(function () {
         czasUtworu();
     }, 1000);
-    $("#go-to-options").on("click", function (e) {
+    $("#go-to-about").on("click", function (e) {
         if (chrome.runtime.openOptionsPage) {
             chrome.runtime.openOptionsPage();
         } else {
-            window.open(chrome.runtime.getURL('options.html'));
+            window.open(chrome.runtime.getURL('informacje.html'));
         }
     });
-    $("#go-to-etery").on("click", function (e) {
-        window.open(chrome.runtime.getURL('etery.html'));
-    });
     $("#a_sub").on("click", function (e) {
-        $("#a_sub").css("color", "red");
-        $("#a_hist").css("color", "blue");
-        $("#a_all").css("color", "blue");
+        $("#l_sub").css("background-color", "#ffdb9c");
+        $("#l_hist").css("background-color", "white");
+        $("#l_all").css("background-color", "white");
         chrome.extension.getBackgroundPage().ladujEterySubPanel($("#panel_etery"));
     });
     $("#a_all").on("click", function (e) {
-        $("#a_sub").css("color", "blue");
-        $("#a_hist").css("color", "blue");
-        $("#a_all").css("color", "red");
+        $("#l_sub").css("background-color", "white");
+        $("#l_hist").css("background-color", "white");
+        $("#l_all").css("background-color", "#ffdb9c");
         chrome.extension.getBackgroundPage().ladujEteryAllPanel($("#panel_etery"));
     });
     $("#a_hist").on("click", function (e) {
-        $("#a_sub").css("color", "blue");
-        $("#a_hist").css("color", "red");
-        $("#a_all").css("color", "blue");
+        $("#l_sub").css("background-color", "white");
+        $("#l_hist").css("background-color", "#ffdb9c");
+        $("#l_all").css("background-color", "white");
         chrome.extension.getBackgroundPage().ladujHistPanel($("#panel_etery"));
     });
     if (chrome.extension.getBackgroundPage().getPanelSubAll() === "all") {
-        $("#a_sub").css("color", "blue");
-        $("#a_all").css("color", "red");
-        $("#a_hist").css("color", "blue");
+        $("#l_sub").css("background-color", "white");
+        $("#l_hist").css("background-color", "white");
+        $("#l_all").css("background-color", "#ffdb9c");
         chrome.extension.getBackgroundPage().ladujEteryAllPanel($("#panel_etery"));
     } else if (chrome.extension.getBackgroundPage().getPanelSubAll() === "hist") {
-        $("#a_sub").css("color", "blue");
-        $("#a_hist").css("color", "red");
-        $("#a_all").css("color", "blue");
+        $("#l_sub").css("background-color", "white");
+        $("#l_hist").css("background-color", "#ffdb9c");
+        $("#l_all").css("background-color", "white");
         chrome.extension.getBackgroundPage().ladujHistPanel($("#panel_etery"));
     } else {
-        $("#a_hist").css("color", "blue");
-        $("#a_sub").css("color", "red");
-        $("#a_all").css("color", "blue");
+        $("#l_sub").css("background-color", "#ffdb9c");
+        $("#l_hist").css("background-color", "white");
+        $("#l_all").css("background-color", "white");
         chrome.extension.getBackgroundPage().ladujEterySubPanel($("#panel_etery"));
     }
     chrome.extension.getBackgroundPage().ustalPanelLista($("#panel_lista"), chrome.extension.getBackgroundPage().getCurrentEter());
@@ -151,16 +148,14 @@ function czasUtworu()
     if (!isNaN(chrome.extension.getBackgroundPage().getCurrentTime()))
     {
         $("#master").slider("option", "value", chrome.extension.getBackgroundPage().getCurrentTime());
-    }
-    else
+    } else
     {
         $("#master").slider("option", "value", 0);
     }
     if (!isNaN(chrome.extension.getBackgroundPage().getDuration()))
     {
         $("#master").slider("option", "max", chrome.extension.getBackgroundPage().getDuration());
-    }
-    else
+    } else
     {
         $("#master").slider("option", "max", 0);
     }

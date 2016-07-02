@@ -1,7 +1,18 @@
 var arrayLista = {};
 var arrayHistoria = {};
 var hist_volume = 32;
+var _AnalyticsCode = 'UA-80240223-1';
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', _AnalyticsCode]);
+_gaq.push(['_trackPageview']);
+
 $(document).ready(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
 
 
     wnetPlayer = document.getElementById("wnetPlayer");
@@ -34,7 +45,7 @@ $(document).ready(function () {
     if (hist_volume === undefined)
     {
         hist_volume = 32;
-     }
+    }
     chrome.extension.getBackgroundPage().setVolume(hist_volume);
 //    console.log = function () {
     //   }

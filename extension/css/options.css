@@ -1,15 +1,8 @@
 #content
 {
     margin: auto;
-    width: 600px;
+    width: 650px;
 }
-#menu{
-    border-bottom:  1px solid silver;
-    font-size:large;
-    font-weight: bold;
-    padding: 10px 10px 10px 0px;
-}
-
 
 h4{
     font-size: 12px !important;
@@ -24,31 +17,20 @@ p{color: #505050;
   font-family: Arial,Helvetica,Verdana,sans-serif;
 }
 
-.menu-elem
-{
-    color: black;
-    font-size: large;
-    font-weight: bold;
-    text-decoration: none;
-}
-.menu-elem:hover
-{
-    color: blue;
-}
 #selected{
     color: blue;
 }
 
 
 #etery_panel{
-    height: 300px;
+    height: 280px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 #ostanio_aktualizowane
 {
 
-    height: 300px;
+    height: 280px;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -85,4 +67,54 @@ p{color: #505050;
 
     text-decoration: none;
     font-weight: bold;
+}
+
+
+
+
+
+
+#ul-options-menu
+{
+    margin-top: 100px;
+    margin-bottom: 10px;
+    display: inline;
+    
+}
+
+#ul-options-menu ul
+{
+    border-bottom:  1px solid silver;
+    padding-left: 4px;
+}
+
+#ul-options-menu ul li {
+    line-height: 18px;
+    font-weight: bold;
+    font-size: 13px;
+    list-style: none;
+    font-family: 'Open Sans', verdana;
+    list-style: none;
+    display: inline-block;
+    padding: 4px 8px 4px 8px;
+    margin: 0px 0px 0px -4px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid silver;
+
+}
+
+#ul-options-menu ul li:hover {
+    background-color:  #ffdb9c;
+    color:black;
+
+}
+#ul-options-menu ul li  a {
+    text-decoration: none;
+}
+#selected-li {
+    background-color:   #ffdb9c;
+    color:black;
 }
