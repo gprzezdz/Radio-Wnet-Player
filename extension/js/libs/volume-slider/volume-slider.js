@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     var slider = $('#slider'), tooltip = $('.tooltip');
-    console.log(" chrome.extension.getBackgroundPage().getVolume(), " +  chrome.extension.getBackgroundPage().getVolume());
+  //  console.log(" chrome.extension.getBackgroundPage().getVolume(), " +  chrome.extension.getBackgroundPage().getVolume());
     tooltip.hide();
     slider.slider({
         range: "min",

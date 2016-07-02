@@ -177,7 +177,7 @@ body{
     width: 130px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 470px;
+    height: 450px;
     float: right;
     text-align: left;
 }
@@ -205,7 +205,7 @@ body{
 
 #footer
 {
-    width: 290px;
+    width: 430px;
     border-bottom:  1px solid #ff910e;
     margin-top: 5px;
 
@@ -213,21 +213,19 @@ body{
 #footer #options
 {
     text-align: left;
-    width: 220px;
+    width: 360px;
     float: left;
     text-decoration: none;
-
 }
 #footer #options a
 {
-
     text-decoration: none;
     font-weight: bold;
     font-size: smaller;
 }
+
 #footer #version
 {
-
     text-align: right;
     float: left;
     width: 67px;
@@ -235,17 +233,14 @@ body{
     font-size: smaller;
 }
 
-
 #eter
 {
     display: inline-block;
-    padding-top:5px;
+    padding-bottom:5px;
     border-bottom:  1px solid #ff910e;
     width: 280px;
     height: 35px;
-
 }
-
 
 .playListElement_img:hover
 {
@@ -253,4 +248,45 @@ body{
 }
 .ether_element:hover{
     background-color: #ffdb9c;
+}
+
+#ul-sah-menu
+{
+    display: inline;
+}
+
+#ul-sah-menu ul
+{
+    border-bottom:  1px solid silver;
+    padding-left: 4px;
+}
+
+#ul-sah-menu ul li {
+    font-weight: bold;
+    font-size: 13px;
+    list-style: none;
+    font-family: 'Open Sans', verdana;
+    list-style: none;
+    display: inline-block;
+    padding: 0px 8px 0px 8px;
+    margin: 0px 0px 0px -4px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid silver;
+}
+
+#ul-sah-menu ul li:hover {
+    background-color:  #ffdb9c;
+    color:black;
+}
+
+#ul-sah-menu ul li  a {
+    text-decoration: none;
+}
+
+#ul-sah-selected-li {
+    background-color:   #ffdb9c;
+    color:black;
 }
